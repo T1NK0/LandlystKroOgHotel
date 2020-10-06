@@ -303,6 +303,7 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Classes\BookingManager.cs" />
     <Compile Include="Classes\Equipment.cs" />
     <Compile Include="Classes\RoomType.cs" />
     <Compile Include="ConferenceRoom.aspx.cs">

@@ -6,75 +6,41 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LandlystKroOgHotel.Classes;
 
 namespace LandlystKroOgHotel
 {
     public partial class SingleRoom : System.Web.UI.Page
     {
+        BookingManager bm = new BookingManager();
+        
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            var sessionValue = Session["AirconChoice"];
 
-            //Checkker om der eksistere en session.
-            if (sessionValue != null)
-            {
-                //parser session varibalen til en streng
-                string value = (string)sessionValue;
-
-                //Skal vælge alle værelser som har aircondition hvis knappen yes, er trykket af i listen. Hvis nej er trykket skal den vælge alle uden aircon.
-                //SelectSingleRoomWithAircon();
-
-                //Tøm sessionen via Session.Clear()
-                Session.Clear();
-            }
-            else if (sessionValue == null)
-            {
-                //parser session varibalen til en streng
-                string value = (string)sessionValue;
-
-                //Skal vælge alle værelser som har aircondition hvis knappen yes, er trykket af i listen. Hvis nej er trykket skal den vælge alle uden aircon.
-                //SelectSingleRoomWithoutAircon();
-
-                //Tøm sessionen via Session.Clear()
-                Session.Clear();
-            }
         }
 
         protected void ButtonCreateReservation_Click(object sender, EventArgs e)
         {
-            string customerFirstName = nameSingleRoom.Text.ToString();
-            string customerLastname = customerLastname.Text.ToString();
-            string customerAddress = addressSingleRoom.Text.ToString();
-            int customerZipCode = int.Parse(zipCodeSingleRoom.Text);
-            string customerCity = citySingleRoom.Text.ToString();
-            int customerPhoneNumber = int.Parse(phoneNumberSingleRoom.Text);
-            string customerEmailAddress = eMailAddressSingleRoom.Text.ToString();
+            string customerFirstName = TextBoxFirstName.Text.ToString();
+            string customerLastname = TextBoxLastName.Text.ToString();
+            string customerAddress = TextBoxAddress.Text.ToString();
+            string customerZipCode = TextBoxPostal.Text.ToString();
+            string customerCity = TextBoxCity.Text.ToString();
+            string customerTelephone = TextBoxTelephone.Text.ToString();
+            string customerEmail = TextBoxEmail.Text.ToString();
+            string roomChoice = DropDownListRoom.SelectedIndex.ToString();
+            string checkIn = CalendarCheckIn.SelectedDate.ToString();
+            string checkOut = CalendarCheckOut.SelectedDate.ToString();
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
+            bm.CreateUser(customerFirstName, customerLastname, customerAddress, customerZipCode, customerCity, customerTelephone, customerEmail);
 
-            //Insert into user
-            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, CityName, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
-            cmd.Parameters.AddWithValue("@Firstname", TextBoxFirstName.Text);
-            cmd.Parameters.AddWithValue("@Lastname", TextBoxLastName.Text);
-            cmd.Parameters.AddWithValue("@Address", TextBoxAddress.Text);
-            cmd.Parameters.AddWithValue("@PostalNumb", TextBoxPostal.Text);
-            cmd.Parameters.AddWithValue("@City", TextBoxCity.Text);
-            cmd.Parameters.AddWithValue("@Telephone", TextBoxTelephone.Text);
-            cmd.Parameters.AddWithValue("@Email", TextBoxEmail.Text);
-
-            cmd.CommandText = @"INSERT INTO Reservation () VALUES ()";
-
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            conn.Close();
-            Response.Redirect("Default.aspx");
+            bm.CreateBooking(customerFirstName, customerLastname, checkIn, checkOut);
         }
 
         protected void RadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session["AirconChoice"] = RadioButtonList.ToString();
+            
         }
     }
 }
