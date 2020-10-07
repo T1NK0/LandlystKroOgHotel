@@ -110,7 +110,7 @@ namespace LandlystKroOgHotel
             cmd.Parameters.AddWithValue("@Email", UIEmail);
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            cmd.ExecuteNonQuery();
             conn.Close();
         }
 
@@ -121,7 +121,18 @@ namespace LandlystKroOgHotel
             //EXAMPLE
             //INSERT INTO Reservation(CheckIn, CheckOut, RoomID, CustomerID) VALUES('20200715', '20200720', 1, 1);
 
-            //SELECT STRING_AGG (column, ',') AS column FROM Table;
+            //Find Customer ID
+            //cmd.CommandText = "SELECT customerID FROM customer WHERE email = @email";
+            //cmd.Parameters.AddWithValue("@email", Customer.Email);
+
+            //conn.Open();
+            //SqlDataReader reader = cmd.ExecuteReader();
+            //while (reader.Read())
+            //{
+            //    Customer.ID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("customerID")));
+            //}
+            //conn.Close();
+            //cmd.Parameters.Clear();
 
             cmd.CommandText = @"INSERT INTO Customer (CheckIn, CheckOut, RoomID, CustomerID) VALUES (@CheckIn, @CheckOut, @RoomID, @CustomerID)";
             cmd.Parameters.AddWithValue("@CheckIn", checkIn);
@@ -131,8 +142,15 @@ namespace LandlystKroOgHotel
 
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            cmd.ExecuteNonQuery();
             conn.Close();
+        }
+
+        public void SelectCustomerInfo()
+        {
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"SELECT * FROM Customer";
         }
     }
 }

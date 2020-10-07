@@ -213,6 +213,15 @@ namespace LandlystKroOgHotel
         protected global::System.Web.UI.WebControls.DropDownList DropDownListRoom;
 
         /// <summary>
+        /// SqlDataSourceSelectRoom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSelectRoom;
+
+        /// <summary>
         /// ButtonCreateReservation control.
         /// </summary>
         /// <remarks>

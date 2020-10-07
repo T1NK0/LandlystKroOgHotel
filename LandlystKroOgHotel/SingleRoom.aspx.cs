@@ -22,6 +22,7 @@ namespace LandlystKroOgHotel
 
         protected void ButtonCreateReservation_Click(object sender, EventArgs e)
         {
+            
             string customerFirstName = TextBoxFirstName.Text.ToString();
             string customerLastname = TextBoxLastName.Text.ToString();
             string customerAddress = TextBoxAddress.Text.ToString();
@@ -31,7 +32,11 @@ namespace LandlystKroOgHotel
             string customerEmail = TextBoxEmail.Text.ToString();
             string roomChoice = DropDownListRoom.SelectedIndex.ToString();
             string checkIn = CalendarCheckIn.SelectedDate.ToShortDateString();
-            string checkOut = CalendarCheckOut.SelectedDate.ToShortDateString();
+            //string checkInDate;
+            //string checkOutDate;
+            //bm.checkInDate = CalendarCheckIn.SelectedDate.ToString("yyyy-MM-dd hh:mm:ss");
+            //bm.checkOutDate = CalendarCheckOut.SelectedDate.ToString("yyyy-MM-dd hh:mm:ss");
+            //string checkOut = CalendarCheckOut.SelectedDate.ToShortDateString();
 
             bm.CreateCustomer(customerFirstName, customerLastname, customerAddress, customerZipCode, customerCity, customerTelephone, customerEmail);
 
