@@ -103,25 +103,42 @@ namespace LandlystKroOgHotel
             conn.Close();
         }
 
-        //public void CreateUser(UIFirstname, UILastname, UIAddress, UIPostalNumb, UICity, UITelephone, UIEmail) //UI = UserInput
-        //{
-        //    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-        //    SqlCommand cmd = new SqlCommand();
-        //    cmd.Connection = conn;
+        public void CreateUser(string UIFirstname, string UILastname, string UIAddress, string UIPostalNumb, string UICity, string UITelephone, string UIEmail) //UI = UserInput
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
 
-        //    //Insert into user
-        //    cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, City, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
-        //    cmd.Parameters.AddWithValue("@Firstname", UIFirstname);
-        //    cmd.Parameters.AddWithValue("@Lastname", UILastname);
-        //    cmd.Parameters.AddWithValue("@Address", UIAddress);
-        //    cmd.Parameters.AddWithValue("@PostalNumb", UIPostalNumb);
-        //    cmd.Parameters.AddWithValue("@City", UICity);
-        //    cmd.Parameters.AddWithValue("@Telephone", UITelephone);
-        //    cmd.Parameters.AddWithValue("@Email", UIEmail);
+            //Insert into user
+            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, City, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
+            cmd.Parameters.AddWithValue("@Firstname", UIFirstname);
+            cmd.Parameters.AddWithValue("@Lastname", UILastname);
+            cmd.Parameters.AddWithValue("@Address", UIAddress);
+            cmd.Parameters.AddWithValue("@PostalNumb", UIPostalNumb);
+            cmd.Parameters.AddWithValue("@City", UICity);
+            cmd.Parameters.AddWithValue("@Telephone", UITelephone);
+            cmd.Parameters.AddWithValue("@Email", UIEmail);
 
-        //    conn.Open();
-        //    SqlDataReader reader = cmd.ExecuteReader();
-        //    conn.Close();
-        //}
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            conn.Close();
+        }
+
+        public void CreateBooking(string customerFirstName, string customerLastname, string checkIn, string checkOut)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, CheckIn, CheckOut) VALUES (@Firstname, @Lastname, @CheckIn, @CheckOut)";
+            cmd.Parameters.AddWithValue("@Firstname", customerFirstName);
+            cmd.Parameters.AddWithValue("@Lastname", customerLastname);
+            cmd.Parameters.AddWithValue("@CheckIn", checkIn);
+            cmd.Parameters.AddWithValue("@CheckOut", checkOut);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            conn.Close();
+        }
     }
 }
