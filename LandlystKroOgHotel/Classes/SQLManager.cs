@@ -10,10 +10,10 @@ namespace LandlystKroOgHotel
 {
     public class SQL
     {
+        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
+        SqlCommand cmd = new SqlCommand();
         public void CreateRoomType()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO RoomType(RoomTypeID, RoomTypeName)
@@ -31,8 +31,6 @@ namespace LandlystKroOgHotel
 
         public void CreateEquipment()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO Equipment(EquipmentID, EquipmentName)
@@ -48,8 +46,6 @@ namespace LandlystKroOgHotel
 
         public void CreateRoom()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO Room (RoomID, RoomNumber, RoomPrice, RoomDescription, RoomTypeID, EquipmentID)
@@ -65,7 +61,7 @@ namespace LandlystKroOgHotel
             (9, 108, 845, 'Flot lækkert enkeltværelse', 1, 1),
             (10, 109, 845, 'Flot lækkert enkeltværelse', 1, 1),
             (11, 110, 845, 'Flot lækkert enkeltværelse', 1, 1),
-            (12, 111, 845, 'Flot lækkert enkeltværelse', 1, 1);";
+            (12, 111, 845, 'Flot lækkert enkeltværelse', 1, 1)";
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -74,8 +70,6 @@ namespace LandlystKroOgHotel
 
         public void SelectSingleRoomWithAircon()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             cmd.CommandText = @"SELECT RoomNumber FROM Room
@@ -90,8 +84,6 @@ namespace LandlystKroOgHotel
 
         public void SelectSingleRoomWithoutAircon()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             cmd.CommandText = @"SELECT RoomNumber FROM Room
@@ -103,14 +95,12 @@ namespace LandlystKroOgHotel
             conn.Close();
         }
 
-        public void CreateUser(string UIFirstname, string UILastname, string UIAddress, string UIPostalNumb, string UICity, string UITelephone, string UIEmail) //UI = UserInput
+        public void CreateCustomer(string UIFirstname, string UILastname, string UIAddress, string UIPostalNumb, string UICity, string UITelephone, string UIEmail) //UI = UserInput
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             //Insert into user
-            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, City, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
+            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, CityName, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
             cmd.Parameters.AddWithValue("@Firstname", UIFirstname);
             cmd.Parameters.AddWithValue("@Lastname", UILastname);
             cmd.Parameters.AddWithValue("@Address", UIAddress);
@@ -124,17 +114,21 @@ namespace LandlystKroOgHotel
             conn.Close();
         }
 
-        public void CreateBooking(string customerFirstName, string customerLastname, string checkIn, string checkOut)
+        public void CreateBooking(string checkIn, string checkOut, string roomID, string customerID)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, CheckIn, CheckOut) VALUES (@Firstname, @Lastname, @CheckIn, @CheckOut)";
-            cmd.Parameters.AddWithValue("@Firstname", customerFirstName);
-            cmd.Parameters.AddWithValue("@Lastname", customerLastname);
+            //EXAMPLE
+            //INSERT INTO Reservation(CheckIn, CheckOut, RoomID, CustomerID) VALUES('20200715', '20200720', 1, 1);
+
+            //SELECT STRING_AGG (column, ',') AS column FROM Table;
+
+            cmd.CommandText = @"INSERT INTO Customer (CheckIn, CheckOut, RoomID, CustomerID) VALUES (@CheckIn, @CheckOut, @RoomID, @CustomerID)";
             cmd.Parameters.AddWithValue("@CheckIn", checkIn);
             cmd.Parameters.AddWithValue("@CheckOut", checkOut);
+            cmd.Parameters.AddWithValue("@RoomID", roomID);
+            cmd.Parameters.AddWithValue("@CustomerID", customerID);
+
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();

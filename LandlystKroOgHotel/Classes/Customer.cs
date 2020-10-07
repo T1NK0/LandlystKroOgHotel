@@ -8,31 +8,35 @@ namespace LandlystKroOgHotel
 {
     public class Customer
     {
-        /*FIELDS*/
+        #region fields
         private string firstName;
         private string lastName;
         private string address;
         private string postalNumber;
+        private string city;
         private string telephoneNumber;
         private string email;
+        #endregion
 
-        /*CONSTRUCTOR*/
+        #region constructors
         public Customer()
         {
 
         }
 
-        public Customer(FirstNameInput, LastNameInput, AddressFamilyInput, PostalNumberInput, TelephoneNumberInput, EmailInput)
+        public Customer(string FirstNameInput, string LastNameInput, string AddressFamilyInput, string PostalNumberInput, string CityInput, string TelephoneNumberInput, string EmailInput)
         {
             FirstName = FirstNameInput;
             LastName = LastNameInput;
-            AddressFamily = AddressFamilyInput;
+            Address = AddressFamilyInput;
             PostalNumber = PostalNumberInput;
+            City = CityInput;
             TelephoneNumber = TelephoneNumberInput;
-            Email = EmalInput;          
+            Email = EmailInput;          
         }
+        #endregion
 
-        /*PROPERTIES*/
+        #region properties
         public string FirstName
         {
             get { return firstName; }
@@ -53,6 +57,11 @@ namespace LandlystKroOgHotel
             get { return postalNumber; }
             set { postalNumber = value; }
         }
+        public string City
+        {
+            get { return city; }
+            set { city = value; }
+        }
         public string TelephoneNumber
         {
             get { return telephoneNumber; }
@@ -63,5 +72,6 @@ namespace LandlystKroOgHotel
             get { return email; }
             set { email = value; }
         }
+        #endregion
     }
 }

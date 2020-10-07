@@ -18,7 +18,11 @@ namespace LandlystKroOgHotel.Classes
         }
 
         /*PROPERTIES*/
-        public string 
+        public int RoomTypeID
+        {
+            get { return RoomTypeID; }
+            set { roomTypeID = value; }
+        }
         public string RoomTypeName
         {
             get { return roomTypeName; }

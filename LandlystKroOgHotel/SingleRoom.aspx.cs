@@ -13,7 +13,7 @@ namespace LandlystKroOgHotel
     public partial class SingleRoom : System.Web.UI.Page
     {
         BookingManager bm = new BookingManager();
-        
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,17 +30,24 @@ namespace LandlystKroOgHotel
             string customerTelephone = TextBoxTelephone.Text.ToString();
             string customerEmail = TextBoxEmail.Text.ToString();
             string roomChoice = DropDownListRoom.SelectedIndex.ToString();
-            string checkIn = CalendarCheckIn.SelectedDate.ToString();
-            string checkOut = CalendarCheckOut.SelectedDate.ToString();
+            string checkIn = CalendarCheckIn.SelectedDate.ToShortDateString();
+            string checkOut = CalendarCheckOut.SelectedDate.ToShortDateString();
 
-            bm.CreateUser(customerFirstName, customerLastname, customerAddress, customerZipCode, customerCity, customerTelephone, customerEmail);
+            bm.CreateCustomer(customerFirstName, customerLastname, customerAddress, customerZipCode, customerCity, customerTelephone, customerEmail);
 
-            bm.CreateBooking(customerFirstName, customerLastname, checkIn, checkOut);
+            //bm.CreateBooking(checkIn, checkOut, roomID, customerID);
         }
 
-        protected void RadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ACChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            if (ACChoice.SelectedValue == "Yes")
+            {
+                bm.SelectRoomsWithAircon();
+            }
+            else if (ACChoice.SelectedValue == "No")
+            {
+                bm.SelectRoomsWithoutAircon();
+            }
         }
     }
 }

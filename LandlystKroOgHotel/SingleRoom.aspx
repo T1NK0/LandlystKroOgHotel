@@ -82,15 +82,15 @@
                         <div class="col-lg-6">
                             <asp:Literal ID="Literal8" runat="server">Aircondition</asp:Literal>
                             <br />
-                            <asp:RadioButtonList ID="RadioButtonList" runat="server" OnSelectedIndexChanged="RadioButtonList_SelectedIndexChanged">
-                                <asp:ListItem Text="Ja" Value="Yes"></asp:ListItem>
-                                <asp:ListItem Text="Nej" Value="No"></asp:ListItem>
+                            <asp:RadioButtonList ID="ACChoice" runat="server" OnSelectedIndexChanged="ACChoice_SelectedIndexChanged" AutoPostBack="true">
+                                <asp:ListItem Value="Yes">Ja</asp:ListItem>
+                                <asp:ListItem Value="No" Selected="True">Nej</asp:ListItem>
                             </asp:RadioButtonList>
                         </div>
                         <div class="col-lg-6">
                             <asp:Literal ID="Literal7" runat="server">Værelse</asp:Literal>
-                            <asp:DropDownList ID="DropDownListRoom" runat="server" DataSourceID="SingelroomSelectRoom" DataTextField="RoomNumber" DataValueField="RoomID" CssClass="form-control"></asp:DropDownList>
-                            <asp:SqlDataSource runat="server" ID="SingelroomSelectRoom" ConnectionString='<%$ ConnectionStrings:LandlystConnectionString %>' SelectCommand="SELECT RoomID, RoomNumber FROM Room INNER JOIN RoomType ON Room.RoomTypeID = RoomType.RoomTypeID WHERE RoomType.RoomTypeID = 1 AND Room.EquipmentID IS NULL"></asp:SqlDataSource>
+                            <asp:DropDownList ID="DropDownListRoom" runat="server" CssClass="form-control"></asp:DropDownList>
+                            <%-- høre til dropdown:DataTextField="RoomNumber" DataValueField="RoomID" <asp:SqlDataSource runat="server" ID="SingelroomSelectRoom" ConnectionString='<%$ ConnectionStrings:LandlystConnectionString %>' SelectCommand="SELECT RoomID, RoomNumber FROM Room INNER JOIN RoomType ON Room.RoomTypeID = RoomType.RoomTypeID WHERE RoomType.RoomTypeID = 1 AND Room.EquipmentID IS NULL"></asp:SqlDataSource>--%>
                         </div>
                     </div>
                     <asp:Button ID="ButtonCreateReservation" runat="server" Text="Reserver værelse" class="btn btn-success" OnClick="ButtonCreateReservation_Click" />
