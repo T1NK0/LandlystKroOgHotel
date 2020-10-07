@@ -6,13 +6,15 @@
             <div class="col-lg-6">
                 <div class="col-md-12 CreateReservation">
                     <h1>ENKELT VÆRELSE</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In iaculis at quam ac sollicitudin.
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In iaculis at quam ac sollicitudin.
                     Sed consequat venenatis imperdiet. Maecenas lobortis nisi id sapien convallis, a gravida tortor consectetur.
                     Aliquam commodo urna nisi, non malesuada nulla consectetur at. Sed aliquam quam ipsum, quis semper felis eleifend sit amet.
                     Sed blandit pharetra nisl vel gravida.
                     </p>
-                    
-                    <p>Curabitur lorem diam, tempus ut mauris vitae, facilisis maximus risus.
+
+                    <p>
+                        Curabitur lorem diam, tempus ut mauris vitae, facilisis maximus risus.
                     Curabitur dapibus pellentesque tempus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
                     Vestibulum mauris metus, luctus dapibus est a, auctor malesuada ante. Integer in venenatis libero, eu rhoncus sem.
                     Sed gravida ornare ipsum, non cursus nibh pretium vestibulum. Suspendisse quis tellus neque.
@@ -52,19 +54,6 @@
                             <asp:TextBox ID="TextBoxEmail" runat="server" placeholder="Email" CssClass="form-control"></asp:TextBox>
                         </div>
                         <div class="col-lg-6">
-                            <asp:Literal ID="Literal8" runat="server">Aircondition</asp:Literal>
-                            <br />
-                            <asp:RadioButtonList ID="RadioButtonList" runat="server" OnSelectedIndexChanged="RadioButtonList_SelectedIndexChanged">
-                                <asp:ListItem Text="Yes" Value="Yes"></asp:ListItem>
-                                <asp:ListItem Text="No" Value="No"></asp:ListItem>
-                            </asp:RadioButtonList>
-                        </div>
-                        <div class="col-lg-6">
-                            <asp:Literal ID="Literal7" runat="server">Værelse</asp:Literal>
-                            <asp:DropDownList ID="DropDownListRoom" runat="server" DataSourceID="SingelroomSelectRoom" DataTextField="RoomNumber" DataValueField="RoomID" CssClass="form-control"></asp:DropDownList>
-                            <asp:SqlDataSource runat="server" ID="SingelroomSelectRoom" ConnectionString='<%$ ConnectionStrings:LandlystConnectionString %>' SelectCommand="SELECT RoomID, RoomNumber FROM Room INNER JOIN RoomType ON Room.RoomTypeID = RoomType.RoomTypeID WHERE RoomType.RoomTypeID = 1 AND Room.EquipmentID IS NULL"></asp:SqlDataSource>
-                        </div>
-                        <div class="col-lg-6">
                             <asp:Literal ID="Literal9" runat="server">Check ind</asp:Literal>
                             <asp:Calendar ID="CalendarCheckIn" runat="server" BackColor="White" BorderColor="#999999" CellPadding="4" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="Black" Height="180px" Width="200px">
                                 <DayHeaderStyle BackColor="#CCCCCC" Font-Bold="True" Font-Size="7pt" />
@@ -89,6 +78,19 @@
                                 <TodayDayStyle BackColor="#CCCCCC" ForeColor="Black" />
                                 <WeekendDayStyle BackColor="#FFFFCC" />
                             </asp:Calendar>
+                        </div>
+                        <div class="col-lg-6">
+                            <asp:Literal ID="Literal8" runat="server">Aircondition</asp:Literal>
+                            <br />
+                            <asp:RadioButtonList ID="RadioButtonList" runat="server" OnSelectedIndexChanged="RadioButtonList_SelectedIndexChanged">
+                                <asp:ListItem Text="Ja" Value="Yes"></asp:ListItem>
+                                <asp:ListItem Text="Nej" Value="No"></asp:ListItem>
+                            </asp:RadioButtonList>
+                        </div>
+                        <div class="col-lg-6">
+                            <asp:Literal ID="Literal7" runat="server">Værelse</asp:Literal>
+                            <asp:DropDownList ID="DropDownListRoom" runat="server" DataSourceID="SingelroomSelectRoom" DataTextField="RoomNumber" DataValueField="RoomID" CssClass="form-control"></asp:DropDownList>
+                            <asp:SqlDataSource runat="server" ID="SingelroomSelectRoom" ConnectionString='<%$ ConnectionStrings:LandlystConnectionString %>' SelectCommand="SELECT RoomID, RoomNumber FROM Room INNER JOIN RoomType ON Room.RoomTypeID = RoomType.RoomTypeID WHERE RoomType.RoomTypeID = 1 AND Room.EquipmentID IS NULL"></asp:SqlDataSource>
                         </div>
                     </div>
                     <asp:Button ID="ButtonCreateReservation" runat="server" Text="Reserver værelse" class="btn btn-success" OnClick="ButtonCreateReservation_Click" />

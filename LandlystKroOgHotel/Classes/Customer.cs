@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Web;
 
 namespace LandlystKroOgHotel
@@ -18,7 +19,17 @@ namespace LandlystKroOgHotel
         /*CONSTRUCTOR*/
         public Customer()
         {
-            
+
+        }
+
+        public Customer(FirstNameInput, LastNameInput, AddressFamilyInput, PostalNumberInput, TelephoneNumberInput, EmailInput)
+        {
+            FirstName = FirstNameInput;
+            LastName = LastNameInput;
+            AddressFamily = AddressFamilyInput;
+            PostalNumber = PostalNumberInput;
+            TelephoneNumber = TelephoneNumberInput;
+            Email = EmalInput;          
         }
 
         /*PROPERTIES*/
