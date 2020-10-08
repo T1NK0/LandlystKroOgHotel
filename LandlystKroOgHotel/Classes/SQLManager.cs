@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Sockets;
@@ -11,12 +12,16 @@ namespace LandlystKroOgHotel
     public class SQL
     {
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-        SqlCommand cmd = new SqlCommand();
+        SqlCommand sqlCommand;
+        SqlDataReader dataReader;
+        SqlDataAdapter da = new SqlDataAdapter();
+        DataTable dt;
+
         public void CreateRoomType()
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO RoomType(RoomTypeID, RoomTypeName)
+            sqlCommand.CommandText = @"INSERT INTO RoomType(RoomTypeID, RoomTypeName)
             VALUES
             (1, 'Single'),
             (2, 'Double'),
@@ -25,30 +30,30 @@ namespace LandlystKroOgHotel
             (5, 'ConferenceRoom')";
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = sqlCommand.ExecuteReader();
             conn.Close();
         }
 
         public void CreateEquipment()
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Equipment(EquipmentID, EquipmentName)
+            sqlCommand.CommandText = @"INSERT INTO Equipment(EquipmentID, EquipmentName)
             VAlUES
             (1, 'Aircondition'),
             (2, 'Jacuzzi'),
             (3, 'Balchony')";
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = sqlCommand.ExecuteReader();
             conn.Close();
         }
 
         public void CreateRoom()
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Room (RoomID, RoomNumber, RoomPrice, RoomDescription, RoomTypeID, EquipmentID)
+            sqlCommand.CommandText = @"INSERT INTO Room (RoomID, RoomNumber, RoomPrice, RoomDescription, RoomTypeID, EquipmentID)
             VALUES
             (1, 100, 795, 'Flot lækkert enkeltværelse', 1, NULL),
             (2, 101, 795, 'Flot lækkert enkeltværelse', 1, NULL),
@@ -64,59 +69,64 @@ namespace LandlystKroOgHotel
             (12, 111, 845, 'Flot lækkert enkeltværelse', 1, 1)";
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = sqlCommand.ExecuteReader();
             conn.Close();
         }
 
-        public void SelectSingleRoomWithAircon()
+        public void SelectAllSingleRoomsWithAircon()
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
-            cmd.CommandText = @"SELECT RoomNumber FROM Room
+            sqlCommand.CommandText = @"SELECT RoomNumber FROM Room
             INNER JOIN RoomType ON Room.RoomTypeID = RoomType.RoomTypeID
             INNER JOIN Equipment ON Room.EquipmentID = Equipment.EquipmentID
             WHERE RoomType.RoomTypeID = 1 AND Equipment.EquipmentID = 1";
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = sqlCommand.ExecuteReader();
             conn.Close();
         }
 
-        public void SelectSingleRoomWithoutAircon()
+        public DataTable SelectAllSingleRoomsWithoutAircon()
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
-            cmd.CommandText = @"SELECT RoomNumber FROM Room
+            sqlCommand.CommandText = @"SELECT RoomNumber FROM Room
             INNER JOIN RoomType ON Room.RoomTypeID = RoomType.RoomTypeID
             WHERE RoomType.RoomTypeID = 1 AND Room.EquipmentID IS NULL";
 
             conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            da.SelectCommand = sqlCommand;
+            dataReader = sqlCommand.ExecuteReader();
+            dataReader.Close();
+            da.Fill(dt);
             conn.Close();
+            da.Dispose();
+            return dt;
         }
 
         public void CreateCustomer(string UIFirstname, string UILastname, string UIAddress, string UIPostalNumb, string UICity, string UITelephone, string UIEmail) //UI = UserInput
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
             //Insert into user
-            cmd.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, CityName, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
-            cmd.Parameters.AddWithValue("@Firstname", UIFirstname);
-            cmd.Parameters.AddWithValue("@Lastname", UILastname);
-            cmd.Parameters.AddWithValue("@Address", UIAddress);
-            cmd.Parameters.AddWithValue("@PostalNumb", UIPostalNumb);
-            cmd.Parameters.AddWithValue("@City", UICity);
-            cmd.Parameters.AddWithValue("@Telephone", UITelephone);
-            cmd.Parameters.AddWithValue("@Email", UIEmail);
+            sqlCommand.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, CityName, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
+            sqlCommand.Parameters.AddWithValue("@Firstname", UIFirstname);
+            sqlCommand.Parameters.AddWithValue("@Lastname", UILastname);
+            sqlCommand.Parameters.AddWithValue("@Address", UIAddress);
+            sqlCommand.Parameters.AddWithValue("@PostalNumb", UIPostalNumb);
+            sqlCommand.Parameters.AddWithValue("@City", UICity);
+            sqlCommand.Parameters.AddWithValue("@Telephone", UITelephone);
+            sqlCommand.Parameters.AddWithValue("@Email", UIEmail);
 
             conn.Open();
-            cmd.ExecuteNonQuery();
+            sqlCommand.ExecuteNonQuery();
             conn.Close();
         }
 
         public void CreateBooking(string checkIn, string checkOut, string roomID, string customerID)
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
             //EXAMPLE
             //INSERT INTO Reservation(CheckIn, CheckOut, RoomID, CustomerID) VALUES('20200715', '20200720', 1, 1);
@@ -134,23 +144,23 @@ namespace LandlystKroOgHotel
             //conn.Close();
             //cmd.Parameters.Clear();
 
-            cmd.CommandText = @"INSERT INTO Customer (CheckIn, CheckOut, RoomID, CustomerID) VALUES (@CheckIn, @CheckOut, @RoomID, @CustomerID)";
-            cmd.Parameters.AddWithValue("@CheckIn", checkIn);
-            cmd.Parameters.AddWithValue("@CheckOut", checkOut);
-            cmd.Parameters.AddWithValue("@RoomID", roomID);
-            cmd.Parameters.AddWithValue("@CustomerID", customerID);
+            sqlCommand.CommandText = @"INSERT INTO Customer (CheckIn, CheckOut, RoomID, CustomerID) VALUES (@CheckIn, @CheckOut, @RoomID, @CustomerID)";
+            sqlCommand.Parameters.AddWithValue("@CheckIn", checkIn);
+            sqlCommand.Parameters.AddWithValue("@CheckOut", checkOut);
+            sqlCommand.Parameters.AddWithValue("@RoomID", roomID);
+            sqlCommand.Parameters.AddWithValue("@CustomerID", customerID);
 
 
             conn.Open();
-            cmd.ExecuteNonQuery();
+            sqlCommand.ExecuteNonQuery();
             conn.Close();
         }
 
         public void SelectCustomerInfo()
         {
-            cmd.Connection = conn;
+            sqlCommand.Connection = conn;
 
-            cmd.CommandText = @"SELECT * FROM Customer";
+            sqlCommand.CommandText = @"SELECT * FROM Customer";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -20,14 +21,31 @@ namespace LandlystKroOgHotel.Classes
             sql.CreateBooking(checkIn, checkOut, roomID, customerID);
         }
 
-        public void SelectRoomsWithAircon()
+
+        DataTable logicDT;
+        List<string> roomNumberList = new List<string>();
+
+        public List<Room> SelectRoomsWithoutAircon()
         {
-            sql.SelectSingleRoomWithAircon();
+            if (logicDT != null)
+                logicDT.Clear();
+            if (roomNumberList.Count != 0)
+                roomNumberList.Clear();
+            logicDT = sql.SelectAllSingleRoomsWithoutAircon();
         }
 
-        public void SelectRoomsWithoutAircon()
+        public List<string> FillDropDown()
         {
-            sql.SelectSingleRoomWithoutAircon();
+            foreach (DataRow row in logicDT.Rows)
+            {
+                roomNumberList.Add(row[1].ToString());
+            }
+            return roomNumberList;
+        }
+
+        public void SelectRoomsWithAircon()
+        {
+            sql.SelectAllSingleRoomsWithAircon();
         }
     }
 }
