@@ -51,7 +51,7 @@ namespace LandlystKroOgHotel
             }
             else if (ACChoice.SelectedValue == "No")
             {
-                bm.SelectRoomsWithoutAircon();
+                //bm.SelectRoomsWithoutAircon();
             }
         }
     }

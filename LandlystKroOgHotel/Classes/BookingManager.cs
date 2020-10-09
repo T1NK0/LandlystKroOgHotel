@@ -22,26 +22,26 @@ namespace LandlystKroOgHotel.Classes
         }
 
 
-        DataTable logicDT;
-        List<string> roomNumberList = new List<string>();
+        //DataTable logicDT;
+        //List<string> roomNumberList = new List<string>();
 
-        public List<Room> SelectRoomsWithoutAircon()
-        {
-            if (logicDT != null)
-                logicDT.Clear();
-            if (roomNumberList.Count != 0)
-                roomNumberList.Clear();
-            logicDT = sql.SelectAllSingleRoomsWithoutAircon();
-        }
+        //public List<string> SelectRoomsWithoutAircon()
+        //{
+        //    if (logicDT != null)
+        //        logicDT.Clear();
+        //    if (roomNumberList.Count != 0)
+        //        roomNumberList.Clear();
+        //    logicDT = sql.SelectAllSingleRoomsWithoutAircon();
+        //}
 
-        public List<string> FillDropDown()
-        {
-            foreach (DataRow row in logicDT.Rows)
-            {
-                roomNumberList.Add(row[1].ToString());
-            }
-            return roomNumberList;
-        }
+        //public List<string> FillDropDown()
+        //{
+        //    foreach (DataRow row in logicDT.Rows)
+        //    {
+        //        roomNumberList.Add(row[1].ToString());
+        //    }
+        //    return roomNumberList;
+        //}
 
         public void SelectRoomsWithAircon()
         {

@@ -12,7 +12,7 @@ namespace LandlystKroOgHotel
     public class SQL
     {
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LandlystConnectionString"].ToString());
-        SqlCommand sqlCommand;
+        SqlCommand sqlCommand = new SqlCommand();
         SqlDataReader dataReader;
         SqlDataAdapter da = new SqlDataAdapter();
         DataTable dt;
@@ -109,7 +109,6 @@ namespace LandlystKroOgHotel
         {
             sqlCommand.Connection = conn;
 
-            //Insert into user
             sqlCommand.CommandText = @"INSERT INTO Customer (Firstname, Lastname, Address, PostalNumb, CityName, Telephone, Email) VALUES (@Firstname, @Lastname, @Address, @PostalNumb, @City, @Telephone,  @Email)";
             sqlCommand.Parameters.AddWithValue("@Firstname", UIFirstname);
             sqlCommand.Parameters.AddWithValue("@Lastname", UILastname);
@@ -133,13 +132,12 @@ namespace LandlystKroOgHotel
 
             //Find Customer ID
             //cmd.CommandText = "SELECT customerID FROM customer WHERE email = @email";
-            //cmd.Parameters.AddWithValue("@email", Customer.Email);
 
             //conn.Open();
-            //SqlDataReader reader = cmd.ExecuteReader();
+            //SqlDataReader reader = sqlCommand.ExecuteReader();
             //while (reader.Read())
             //{
-            //    Customer.ID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("customerID")));
+            //    Customer.CustomerID = Convert.ToInt32(reader.GetValue(reader.GetOrdinal("customerID")));
             //}
             //conn.Close();
             //cmd.Parameters.Clear();
